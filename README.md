@@ -34,7 +34,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Stay in Touch
 
-- **Star this repository** to stay updated. ![GitHub stars](https://img.shields.io/github/stars/Stephen-SMJ/lambda?style=social)
+- **Star this repository** to stay updated.
 
 
 ## Acknowledgements
