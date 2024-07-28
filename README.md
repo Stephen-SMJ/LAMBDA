@@ -1,4 +1,4 @@
-# [LAMBDA](https://www.polyu.edu.hk/ama/cmfai/lambda.html) - Multi-Agent Data Analysis System
+# [LAMBDA](https://www.polyu.edu.hk/ama/cmfai/lambda.html) - Multi-Agents Data Analysis System
 
 <img src="https://github.com/user-attachments/assets/df454158-79e4-4da4-ae03-eb687fe02f16" style="width: 60%">
 
@@ -8,7 +8,7 @@ We introduce **LAMBDA**, a novel open-source, code-free multi-agent data analysi
 
 - **Code-Free Data Analysis**: Perform complex data analysis tasks through human language instruction.
 - **Multi-Agent System**: Utilizes two key agent roles, the programmer and the inspector, to generate and debug code seamlessly.
-- **User Interface**: Includes a robust user interface allowing direct user intervention in the operational loop.
+- **User Interface**: This includes a robust user interface that allows direct user intervention in the operational loop.
 - **Model Integration**: Flexibly integrates external models and algorithms to cater to customized data analysis needs.
 - **Automatic Report Generation**: Concentrate on high-value tasks, rather than spending time and resources on report writing and formatting.
 
