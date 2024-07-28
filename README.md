@@ -1,4 +1,4 @@
-# [LAMBDA](https://www.polyu.edu.hk/ama/cmfai/lambda.html) - Multi-Agents Data Analysis System
+# [LAMBDA](https://www.polyu.edu.hk/ama/cmfai/lambda.html) - Multi-Agent Data Analysis System
 
 <img src="https://github.com/user-attachments/assets/df454158-79e4-4da4-ae03-eb687fe02f16" style="width: 60%">
 
