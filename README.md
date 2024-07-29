@@ -60,3 +60,6 @@ If you find our work useful in your research, consider citing our paper by:
       url={https://arxiv.org/abs/2407.17535}, 
 }
 ```
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Stephen-SMJ/LAMBDA&type=Timeline)](https://star-history.com/#Stephen-SMJ/LAMBDA&Timeline)
