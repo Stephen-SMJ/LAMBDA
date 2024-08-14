@@ -1,6 +1,9 @@
 # [LAMBDA](https://www.polyu.edu.hk/ama/cmfai/lambda.html) - Multi-Agent Data Analysis System
 
-<img src="https://github.com/user-attachments/assets/df454158-79e4-4da4-ae03-eb687fe02f16" style="width: 80%">
+<!-- <img src="https://github.com/user-attachments/assets/df454158-79e4-4da4-ae03-eb687fe02f16" style="width: 80%"> -->
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6f6d49ef-40b7-46f2-88ae-b8f6d9719c3a" style="width: 600px;">
+</p>
 
 We introduce **LAMBDA**, a novel open-source, code-free multi-agent data analysis system that harnesses the power of large models. LAMBDA is designed to address data analysis challenges in complex data-driven applications through the use of innovatively designed data agents that operate iteratively and generatively using natural language.
 
@@ -50,14 +53,11 @@ We thank the contributors and the community for their support and feedback.
 
 If you find our work useful in your research, consider citing our paper by:
 ```
-@misc{sun2024lambdalargemodelbased,
-      title={LAMBDA: A Large Model Based Data Agent}, 
-      author={Maojun Sun and Ruijian Han and Binyan Jiang and Houduo Qi and Defeng Sun and Yancheng Yuan and Jian Huang},
-      year={2024},
-      eprint={2407.17535},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2407.17535}, 
+ @article{sun2024lambda,
+          title={LAMBDA: A Large Model Based Data Agent},
+          author={Sun, Maojun and Han, Ruijian and Jiang, Binyan and Qi, Houduo and Sun, Defeng and Yuan, Yancheng and Huang, Jian},
+          journal={arXiv preprint arXiv:2407.17535},
+          year={2024}
 }
 ```
 ## Star History
