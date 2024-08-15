@@ -23,8 +23,8 @@ LAMBDA has demonstrated strong performance on various machine learning datasets,
 
 The performance of LAMBDA in solving data science problems is demonstrated in several case studies including:
 - **[Data Analysis](https://www.polyu.edu.hk/ama/cmfai/files/lambda/lambda.mp4)**
-- **[Education](https://www.polyu.edu.hk/ama/cmfai/files/lambda/LAMBDA_education.mp4)**
 - **[Integrating Human Intelligence](https://www.polyu.edu.hk/ama/cmfai/files/lambda/knw.mp4)**
+- **[Education](https://www.polyu.edu.hk/ama/cmfai/files/lambda/LAMBDA_education.mp4)**
 
 ## Getting Started
 
