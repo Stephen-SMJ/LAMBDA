@@ -1,9 +1,12 @@
 # [LAMBDA](https://www.polyu.edu.hk/ama/cmfai/lambda.html) - Multi-Agent Data Analysis System
-
+<body>
 <!-- <img src="https://github.com/user-attachments/assets/df454158-79e4-4da4-ae03-eb687fe02f16" style="width: 80%"> -->
-<p align="center">
+<!-- <p align="center">
   <img src="https://github.com/user-attachments/assets/6f6d49ef-40b7-46f2-88ae-b8f6d9719c3a" style="width: 600px;">
-</p>
+</p> -->
+
+![lambda_mix](https://github.com/user-attachments/assets/db5574aa-9441-4c9d-b44d-3b225d11e0cc)
+
 
 We introduce **LAMBDA**, a novel open-source, code-free multi-agent data analysis system that harnesses the power of large models. LAMBDA is designed to address data analysis challenges in complex data-driven applications through the use of innovatively designed data agents that operate iteratively and generatively using natural language.
 
@@ -63,3 +66,4 @@ If you find our work useful in your research, consider citing our paper by:
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Stephen-SMJ/LAMBDA&type=Timeline)](https://star-history.com/#Stephen-SMJ/LAMBDA&Timeline)
+</body>
