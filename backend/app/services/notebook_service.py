@@ -177,7 +177,27 @@ class NotebookService:
                 "text": self._to_notebook_lines(stderr)
             })
 
-        for img_ref in result.get("images") or []:
+        image_refs = list(result.get("images") or [])
+        for file_info in result.get("generated_files") or []:
+            if not isinstance(file_info, dict):
+                continue
+            file_type = (file_info.get("type") or file_info.get("category") or "").lower()
+            filename = (file_info.get("filename") or file_info.get("name") or "").lower()
+            if file_type == "image" or filename.endswith((".png", ".jpg", ".jpeg", ".svg")):
+                image_ref = (
+                    file_info.get("url")
+                    or file_info.get("file_path")
+                    or file_info.get("path")
+                    or file_info.get("oss_url")
+                )
+                if image_ref:
+                    image_refs.append(image_ref)
+
+        seen_refs = set()
+        for img_ref in image_refs:
+            if not img_ref or img_ref in seen_refs:
+                continue
+            seen_refs.add(img_ref)
             image_output = self._image_ref_to_output(img_ref)
             if image_output:
                 outputs.append(image_output)
@@ -229,6 +249,13 @@ class NotebookService:
             media_type = header.split(";", 1)[0].replace("data:", "")
             return base64.b64decode(data), media_type
 
+        content_url_path = self._extract_local_content_path(ref)
+        if content_url_path:
+            path_ref = Path(content_url_path)
+            if path_ref.exists():
+                media_type, _ = mimetypes.guess_type(str(path_ref))
+                return path_ref.read_bytes(), media_type or "application/octet-stream"
+
         object_name = self._extract_proxy_or_oss_object_name(ref)
         if object_name:
             from app.services.oss_service import get_oss_service
@@ -249,6 +276,14 @@ class NotebookService:
                 return path.read_bytes(), media_type or "application/octet-stream"
 
         return None, None
+
+    def _extract_local_content_path(self, ref: str) -> str:
+        if "/api/v1/files/content" not in ref:
+            return ""
+
+        parsed = urlparse(ref)
+        path_values = parse_qs(parsed.query).get("url", [])
+        return unquote(path_values[0]) if path_values else ""
 
     def _extract_proxy_or_oss_object_name(self, ref: str) -> str:
         allowed_prefixes = ("generated/", "uploads/", "latex/")
