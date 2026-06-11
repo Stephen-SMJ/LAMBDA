@@ -108,8 +108,9 @@ if settings.FILE_STORAGE_MODE == "local":
 @app.get("/api/v1/public/config")
 async def public_config():
     return {
-        "turnstile_enabled": settings.TURNSTILE_ENABLED,
-        "turnstile_site_key": settings.TURNSTILE_SITE_KEY,
+        "local_mode": settings.LOCAL_MODE,
+        "turnstile_enabled": False,
+        "turnstile_site_key": "",
     }
 
 

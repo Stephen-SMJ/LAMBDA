@@ -15,7 +15,7 @@ import { useI18n } from '../../i18n'
 
 interface WelcomeScreenProps {
   onSendMessage: (message: string, files?: File[], analysisMode?: string) => void | boolean | Promise<void | boolean>
-  models?: Array<{ id: string; name: string }>
+  models?: Array<{ id: string; name: string; multimodal?: boolean }>
   selectedModel: string
   onModelChange: (model: string) => void
 }
@@ -60,11 +60,17 @@ const formatFileSize = (bytes: number) => {
 
 const getModelSpeedHint = (model: { id: string; name: string }) => {
   const text = `${model.id} ${model.name}`.toLowerCase()
-  if (text.includes('grok')) return 'Fast · within 2 min'
+  if (text.includes('claude-sonnet-4-6') || text.includes('claude sonnet 4.6') || text.includes('gpt-5.3-codex') || text.includes('gpt 5.3 codex') || text.includes('codex')) {
+    return 'Max · 10+ min'
+  }
   if (text.includes('pro')) return 'Max · 10+ min'
   if (text.includes('deepseek') || text.includes('mimo') || text.includes('minimax')) return 'Medium · 5-10 min'
   return 'Medium · 5-10 min'
 }
+
+const formatModelName = (model: { name: string; multimodal?: boolean }) => (
+  model.multimodal ? `${model.name} (Multi-modal)` : model.name
+)
 
 export default function WelcomeScreen({
   onSendMessage,
@@ -226,7 +232,7 @@ export default function WelcomeScreen({
                             }`}
                           >
                             <span className="min-w-0">
-                              <span className="block truncate text-sm font-semibold">{model.name}</span>
+                              <span className="block truncate text-sm font-semibold">{formatModelName(model)}</span>
                               <span className="mt-0.5 block text-xs text-neutral-400">{getModelSpeedHint(model)}</span>
                             </span>
                             {isSelected && <span className="h-2 w-2 shrink-0 rounded-full bg-neutral-900 dark:bg-white" />}

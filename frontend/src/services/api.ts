@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useAuthStore } from '../store/authStore'
 import type { Language } from '../i18n'
 
 // If VITE_API_URL is empty or not set, use relative path (goes through nginx)
@@ -12,35 +11,12 @@ export const api = axios.create({
   },
 })
 
-// Add token to requests
-api.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().token
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
-})
-
-// Handle 401 errors
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      useAuthStore.getState().logout()
-      window.location.href = '/login'
-    }
-    return Promise.reject(error)
-  }
-)
-
 // Create conversation API
 export const createConversation = async (title?: string, model?: string): Promise<any> => {
-  const token = useAuthStore.getState().token
   const response = await fetch(`${API_BASE_URL}/api/v1/conversations`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({ 
       title: title || 'New Conversation',
@@ -64,7 +40,6 @@ export const createConversation = async (title?: string, model?: string): Promis
 
 // File upload API
 export const uploadFile = async (file: File, conversationId?: string): Promise<any> => {
-  const token = useAuthStore.getState().token
   const formData = new FormData()
   formData.append('file', file)
   
@@ -75,9 +50,6 @@ export const uploadFile = async (file: File, conversationId?: string): Promise<a
 
   const response = await fetch(`${API_BASE_URL}/api/v1/files/upload`, {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    },
     body: formData,
   })
 
@@ -101,8 +73,6 @@ export const streamChat = async (
   onError?: (error: any) => void,
   signal?: AbortSignal
 ) => {
-  const token = useAuthStore.getState().token
-  
   try {
     const streamUrl = API_BASE_URL 
       ? `${API_BASE_URL}/api/v1/chat/stream`
@@ -111,7 +81,6 @@ export const streamChat = async (
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({
         message,

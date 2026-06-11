@@ -19,6 +19,7 @@ from threading import RLock
 from typing import Any, Dict
 
 from app.core.config import settings
+from app.utils.text import strip_ansi_escape_codes
 
 
 class LocalCodeExecutionService:
@@ -101,8 +102,8 @@ class LocalCodeExecutionService:
                 generated_images = list(globals_dict.get("_lambda_execution_images", []))
                 os.chdir(old_cwd)
 
-            stdout = stdout_buffer.getvalue()
-            stderr = stderr_buffer.getvalue()
+            stdout = strip_ansi_escape_codes(stdout_buffer.getvalue())
+            stderr = strip_ansi_escape_codes(stderr_buffer.getvalue())
             stdout = self._truncate(stdout, "output")
             stderr = self._truncate(stderr, "error output")
             images = [f"/api/v1/files/content?url={path}" for path in generated_images]
@@ -199,8 +200,8 @@ except Exception:
                 limit=1024 * 1024,
             )
             stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=timeout)
-            stdout_str = self._truncate(stdout.decode("utf-8", errors="replace"), "output")
-            stderr_str = self._truncate(stderr.decode("utf-8", errors="replace"), "error output")
+            stdout_str = self._truncate(strip_ansi_escape_codes(stdout.decode("utf-8", errors="replace")), "output")
+            stderr_str = self._truncate(strip_ansi_escape_codes(stderr.decode("utf-8", errors="replace")), "error output")
             return {
                 "success": process.returncode == 0,
                 "stdout": stdout_str,

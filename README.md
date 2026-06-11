@@ -10,6 +10,8 @@ Cloudflare Turnstile, or an admin backend.
 ## Features
 
 - Chat-based data analysis with tool execution.
+- Local-only single-user mode. No login, registration, invite code, admin panel,
+  public case study publishing, or cloud account is required.
 - Local Python and shell tools.
 - Persistent Python variables within the same conversation.
 - Local workspaces under `backend/data/workspaces/<conversation_id>`.
@@ -34,7 +36,8 @@ Requirements:
 - npm
 - Optional for PDF/Chinese reports: TeX Live with XeLaTeX
 
-Start both backend and frontend:
+Start both backend and frontend. Python packages from `backend/requirements.txt`
+are installed automatically into the local virtual environment:
 
 ```bash
 cp backend/.env.example backend/.env
@@ -46,6 +49,12 @@ Open:
 
 ```text
 http://localhost:3000
+```
+
+If those ports are already used, choose different local ports:
+
+```bash
+BACKEND_PORT=8010 FRONTEND_PORT=3010 ./start.sh
 ```
 
 Stop:
@@ -86,6 +95,15 @@ LaTeX/PDF reports, including Chinese reports:
 
 This installs `pdflatex`, `xelatex`, Chinese LaTeX packages (`xeCJK`/`ctex`),
 and Noto CJK fonts for Chinese charts.
+
+If you want `./start.sh` to install these system packages automatically when
+`xelatex` is missing, run:
+
+```bash
+LAMBDA_AUTO_INSTALL_SYSTEM_DEPS=1 ./start.sh
+```
+
+This uses `sudo apt-get`, so it is opt-in rather than silently modifying the OS.
 
 ## Configuration
 

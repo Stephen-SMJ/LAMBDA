@@ -9,36 +9,6 @@ class UserBase(BaseModel):
     full_name: Optional[str] = None
 
 
-class UserCreate(UserBase):
-    password: str
-    invite_code: str
-    verification_code: str
-    turnstile_token: Optional[str] = None
-
-
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
-
-class SendVerificationCodeRequest(BaseModel):
-    email: EmailStr
-    invite_code: str
-    turnstile_token: Optional[str] = None
-
-
-class SendPasswordResetCodeRequest(BaseModel):
-    email: EmailStr
-    turnstile_token: Optional[str] = None
-
-
-class ResetPasswordRequest(BaseModel):
-    email: EmailStr
-    verification_code: str
-    new_password: str
-    turnstile_token: Optional[str] = None
-
-
 class UserResponse(UserBase):
     id: int
     display_name: Optional[str] = None
@@ -51,17 +21,6 @@ class UserResponse(UserBase):
     
     class Config:
         from_attributes = True
-
-
-# Token schemas
-class Token(BaseModel):
-    access_token: str
-    token_type: str = "bearer"
-    user: UserResponse
-
-
-class TokenPayload(BaseModel):
-    sub: Optional[int] = None
 
 
 # Message schemas
@@ -88,7 +47,7 @@ class MessageResponse(MessageBase):
 # Conversation schemas
 class ConversationBase(BaseModel):
     title: Optional[str] = None
-    model: str = "x-ai/grok-4.1-fast"
+    model: str = "deepseek-v4-flash"
 
 
 class ConversationCreate(ConversationBase):

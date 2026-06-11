@@ -190,6 +190,23 @@ def is_deepseek_model(model: str) -> bool:
     return (model or "").lower().startswith("deepseek")
 
 
+def supports_multimodal_observations(model: str) -> bool:
+    model_lower = (model or "").lower()
+    return model_lower in {item.lower() for item in settings.MULTIMODAL_MODELS}
+
+
+def model_display_name(model: str) -> str:
+    names = {
+        "claude-sonnet-4-6": "Claude Sonnet 4.6",
+        "openai/gpt-5.3-codex": "GPT 5.3 Codex",
+        "deepseek-v4-pro": "DeepSeek V4 Pro",
+        "deepseek-v4-flash": "DeepSeek V4 Flash",
+        "mimo-v2.5-pro": "Mimo V2.5 Pro",
+        "mimo-v2.5": "Mimo V2.5",
+    }
+    return names.get(model, model.split("/")[-1].replace("-", " ").title())
+
+
 def strip_internal_message_markers(content: str) -> str:
     """Remove UI-only metadata from persisted assistant history sent to LLMs."""
     if not content:
@@ -257,7 +274,7 @@ async def stream_chat_response(
             conversation = Conversation(
                 user_id=user.id,
                 title=initial_title[:50] + "..." if len(initial_title) > 50 else initial_title,
-                model=request.model or "x-ai/grok-4.1-fast"
+                model=request.model or "deepseek-v4-flash"
             )
             db.add(conversation)
             db.commit()
@@ -640,7 +657,7 @@ When you receive an error from tool execution:
 - The system will automatically display all generated files and images"""
 
         # Build conversation history
-        model = request.model or conversation.model or "x-ai/grok-4.1-fast"
+        model = request.model or conversation.model or "deepseek-v4-flash"
         inline_tool_history = should_inline_tool_results(model)
         omit_persisted_tool_calls = inline_tool_history or is_deepseek_model(model)
         messages = db.query(Message).filter(
@@ -1151,7 +1168,11 @@ def get_available_models(
     """Get list of available LLM models."""
     return {
         "models": [
-            {"id": model, "name": model.split('/')[-1].replace('-', ' ').title()}
+            {
+                "id": model,
+                "name": model_display_name(model),
+                "multimodal": supports_multimodal_observations(model),
+            }
             for model in settings.AVAILABLE_MODELS
         ],
         "default": settings.DEFAULT_MODEL

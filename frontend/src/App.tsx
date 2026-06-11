@@ -1,10 +1,8 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
 import { useEffect } from 'react'
-import { useAuthStore } from './store/authStore'
 import { useThemeStore } from './store/themeStore'
-import AnnouncementModal from './components/AnnouncementModal'
 
 import ChatPage from './pages/Chat'
 
@@ -23,12 +21,10 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function App() {
-  const { initializeAuth } = useAuthStore()
   const { setTheme, isDark } = useThemeStore()
   const routerBasename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '')
   
   useEffect(() => {
-    initializeAuth()
     // Initialize theme on mount
     setTheme(isDark)
   }, [])
@@ -37,8 +33,6 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router basename={routerBasename}>
         <Routes>
-          <Route path="/login" element={<Navigate to="/" replace />} />
-          <Route path="/register" element={<Navigate to="/" replace />} />
           <Route 
             path="/" 
             element={
@@ -55,11 +49,7 @@ function App() {
               </ProtectedRoute>
             } 
           />
-          <Route path="/admin" element={<Navigate to="/" replace />} />
-          <Route path="/admin/conversations/:conversationId" element={<Navigate to="/" replace />} />
-          <Route path="/cases" element={<Navigate to="/" replace />} />
-          <Route path="/c/:slug" element={<Navigate to="/" replace />} />
-          <Route path="/case-study/*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<ChatPage />} />
         </Routes>
       </Router>
       <Toaster 
@@ -73,7 +63,6 @@ function App() {
           },
         }}
       />
-      <AnnouncementModal />
     </QueryClientProvider>
   )
 }

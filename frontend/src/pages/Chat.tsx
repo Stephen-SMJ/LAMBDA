@@ -4,7 +4,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 // AnimatePresence removed
 import { api, streamChat, createConversation, uploadFile } from '../services/api'
-import { useAuthStore } from '../store/authStore'
 import { useSettingsStore } from '../store/settingsStore'
 import Sidebar from '../components/layout/Sidebar'
 import RightPanel from '../components/layout/RightPanel'
@@ -13,7 +12,7 @@ import MessageList from '../components/chat/MessageList'
 import WelcomeScreen from '../components/chat/WelcomeScreen'
 import SettingsModal from '../components/settings/SettingsModal'
 import toast from 'react-hot-toast'
-import type { Conversation, Message, ChatStreamData, ToolResult } from '../types'
+import type { Conversation, Message, ChatStreamData, ToolResult, User } from '../types'
 import { useI18n } from '../i18n'
 import { Menu } from 'lucide-react'
 
@@ -29,6 +28,7 @@ export interface ToolCallInfo {
 interface Model {
   id: string
   name: string
+  multimodal?: boolean
 }
 
 const dedupeGeneratedFiles = (files: any[] = []) => {
@@ -44,7 +44,6 @@ const dedupeGeneratedFiles = (files: any[] = []) => {
 export default function ChatPage() {
   const { conversationId } = useParams<{ conversationId: string }>()
   const navigate = useNavigate()
-  const { user, logout } = useAuthStore()
   const { isSettingsOpen, openSettings, closeSettings } = useSettingsStore()
   const { t, language } = useI18n()
   const queryClient = useQueryClient()
@@ -98,6 +97,14 @@ export default function ChatPage() {
   const isPendingRef = useRef(false)
   const [pendingStatus, setPendingStatus] = useState<string>(t('initializingConversation'))
   const [modelFromPending, setModelFromPending] = useState<boolean>(false)  // Flag to prevent overwriting model from currentConversation
+  const localUser: User = {
+    id: 1,
+    email: 'local@lambda.local',
+    full_name: 'Local User',
+    is_active: true,
+    is_admin: false,
+    created_at: new Date(0).toISOString(),
+  }
 
   useEffect(() => {
     document.documentElement.classList.add('lambda-chat-lock')
@@ -845,7 +852,7 @@ export default function ChatPage() {
         onSelectConversation={handleSelectConversation}
         onNewChat={handleNewChat}
         onDeleteConversation={handleDeleteConversation}
-        user={user}
+        user={localUser}
         onOpenSettings={openSettings}
         isOpen={sidebarOpen}
         onOpenChange={setSidebarOpen}
@@ -964,8 +971,6 @@ export default function ChatPage() {
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={closeSettings}
-        onLogout={logout}
-        user={user}
       />
     </div>
   )

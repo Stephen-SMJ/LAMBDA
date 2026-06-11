@@ -1,29 +1,19 @@
 import { useThemeStore } from '../../store/themeStore'
 import { useSettingsStore } from '../../store/settingsStore'
 import { useI18n } from '../../i18n'
-import { useNavigate } from 'react-router-dom'
-import { X, LogOut, Sun, Moon, Languages, Shield } from 'lucide-react'
-import type { User as UserType } from '../../types'
+import { X, Sun, Moon, Languages } from 'lucide-react'
 
 interface SettingsModalProps {
   isOpen: boolean
   onClose: () => void
-  onLogout: () => void
-  user?: UserType | null
 }
 
-export default function SettingsModal({ isOpen, onClose, onLogout, user }: SettingsModalProps) {
+export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { isDark, toggleTheme } = useThemeStore()
   const { language, setLanguage } = useSettingsStore()
   const { t } = useI18n()
-  const navigate = useNavigate()
 
   if (!isOpen) return null
-
-  const handleLogout = () => {
-    onLogout()
-    onClose()
-  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
@@ -43,20 +33,12 @@ export default function SettingsModal({ isOpen, onClose, onLogout, user }: Setti
 
         {/* Content */}
         <div className="p-6 space-y-6">
-          {/* User Info Section */}
-          {user && (
-            <div className="flex items-center gap-4 p-4 bg-neutral-50 dark:bg-neutral-800/50 rounded-lg">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neutral-400 to-neutral-600 flex items-center justify-center text-white font-semibold text-lg">
-                {user.full_name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase() || 'U'}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-neutral-900 dark:text-neutral-100 truncate">
-                  {user.full_name || user.email}
-                </p>
-                <p className="text-sm text-neutral-500 truncate">{user.email}</p>
-              </div>
-            </div>
-          )}
+          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-800 dark:bg-neutral-800/50">
+            <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">LAMBDA Local</p>
+            <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+              Single-user local mode. No login or cloud account is required.
+            </p>
+          </div>
 
           {/* Language Section */}
           <div>
@@ -159,43 +141,6 @@ export default function SettingsModal({ isOpen, onClose, onLogout, user }: Setti
             </div>
           </div>
 
-          {user?.is_admin && (
-            <div>
-              <h3 className="text-sm font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-3">
-                {t('adminConsole')}
-              </h3>
-              <button
-                onClick={() => {
-                  navigate('/admin')
-                  onClose()
-                }}
-                className="flex w-full items-center gap-3 rounded-lg border border-neutral-200 p-3 text-left transition-colors hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800"
-              >
-                <div className="rounded-lg bg-neutral-100 p-2 text-neutral-500 dark:bg-neutral-800">
-                  <Shield className="h-5 w-5" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium text-neutral-900 dark:text-neutral-100">
-                    {t('userManagement')}
-                  </p>
-                  <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                    Users, chats, files, and usage overview
-                  </p>
-                </div>
-              </button>
-            </div>
-          )}
-
-          {/* Logout Section */}
-          <div className="pt-4 border-t border-neutral-200 dark:border-neutral-800">
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 p-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors border border-red-200 dark:border-red-900/30"
-            >
-              <LogOut className="w-5 h-5" />
-              <span className="font-medium">{t('logout')}</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>

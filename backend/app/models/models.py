@@ -25,25 +25,13 @@ class User(Base):
     conversations = relationship("Conversation", back_populates="user", cascade="all, delete-orphan")
 
 
-class InviteCode(Base):
-    __tablename__ = "invite_codes"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    code = Column(String(100), unique=True, index=True, nullable=False)
-    max_uses = Column(Integer, default=200, nullable=False)
-    used_count = Column(Integer, default=0, nullable=False)
-    is_active = Column(Boolean, default=True, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
-
 class Conversation(Base):
     __tablename__ = "conversations"
     
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     title = Column(String(500), nullable=True)
-    model = Column(String(100), default="x-ai/grok-4.1-fast")
+    model = Column(String(100), default="deepseek-v4-flash")
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
@@ -100,35 +88,3 @@ class UploadedFile(Base):
     mime_type = Column(String(100), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-
-class EmailVerificationCode(Base):
-    __tablename__ = "email_verification_codes"
-
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String(255), index=True, nullable=False)
-    purpose = Column(String(50), default="register", nullable=False)
-    code_hash = Column(String(255), nullable=False)
-    expires_at = Column(DateTime, nullable=False)
-    used_at = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-
-
-class Announcement(Base):
-    __tablename__ = "announcements"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(255), nullable=False)
-    content = Column(Text, nullable=False)
-    is_active = Column(Boolean, default=True, nullable=False)
-    created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-
-
-class AnnouncementRead(Base):
-    __tablename__ = "announcement_reads"
-
-    id = Column(Integer, primary_key=True, index=True)
-    announcement_id = Column(Integer, ForeignKey("announcements.id"), nullable=False, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
-    read_at = Column(DateTime, default=datetime.utcnow, nullable=False)

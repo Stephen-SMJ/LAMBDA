@@ -471,9 +471,8 @@ async def download_file(
 async def get_file_content(
     url: str,
 ):
-    """Get file content by URL (proxies OSS requests to avoid CORS)."""
-    # Local edition is a single-user app and direct browser previews (img/iframe)
-    # cannot attach Authorization headers. read_content_from_reference still
+    """Get local file content for browser previews."""
+    # Local edition is a single-user app. read_content_from_reference still
     # restricts local paths to the app data directories.
     if not settings.LOCAL_MODE:
         raise HTTPException(status_code=401, detail="Authentication required")

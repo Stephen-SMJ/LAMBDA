@@ -5,7 +5,7 @@ from typing import List
 from app.api.deps import get_current_active_user
 from app.core.database import get_db
 from app.core.hashid import encode_id, decode_id
-from app.models.models import Conversation, Message, User
+from app.models.models import Conversation, Message, UsageRecord, User
 from app.models.schemas import (
     ConversationCreate, 
     ConversationResponse, 
@@ -200,6 +200,27 @@ def delete_conversation(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Conversation not found"
+        )
+
+    message_ids = [
+        row[0] for row in db.query(Message.id)
+        .filter(Message.conversation_id == conversation.id)
+        .all()
+    ]
+
+    db.query(UsageRecord).filter(
+        UsageRecord.conversation_id == conversation.id
+    ).update(
+        {UsageRecord.conversation_id: None},
+        synchronize_session=False
+    )
+
+    if message_ids:
+        db.query(UsageRecord).filter(
+            UsageRecord.message_id.in_(message_ids)
+        ).update(
+            {UsageRecord.message_id: None},
+            synchronize_session=False
         )
     
     db.delete(conversation)

@@ -276,7 +276,7 @@ async def export_report(
             report_content = await llm_service.chat([
                 {"role": "system", "content": "You are a professional data scientist writing comprehensive analysis reports."},
                 {"role": "user", "content": prompt}
-            ], model=conversation.model or "x-ai/grok-4.1-fast")
+            ], model=conversation.model or "deepseek-v4-flash")
             
         except Exception as e:
             # Fallback to basic report

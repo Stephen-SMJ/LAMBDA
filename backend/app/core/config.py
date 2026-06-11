@@ -23,18 +23,26 @@ class Settings(BaseSettings):
     XIAOMI_API_KEY: str = ""
     XIAOMI_BASE_URL: str = "https://token-plan-sgp.xiaomimimo.com/v1"
     DEFAULT_MODEL: str = Field(
-        default="x-ai/grok-4.1-fast",
+        default="deepseek-v4-flash",
         validation_alias=AliasChoices("DEFAULT_MODEL", "MODEL"),
     )
     
     # Available Models
     AVAILABLE_MODELS: List[str] = [
-        "x-ai/grok-4.1-fast",
         "deepseek-v4-pro",
         "deepseek-v4-flash",
+        "claude-sonnet-4-6",
+        "openai/gpt-5.3-codex",
         "mimo-v2.5-pro",
         "mimo-v2.5",
     ]
+    MULTIMODAL_MODELS: List[str] = [
+        "claude-sonnet-4-6",
+        "openai/gpt-5.3-codex",
+        "mimo-v2.5",
+    ]
+    MULTIMODAL_IMAGE_DETAIL: str = "high"
+    MULTIMODAL_IMAGE_MAX_BYTES: int = 8 * 1024 * 1024
     
     # Code Execution
     CODE_EXECUTION_TIMEOUT: int = 900
@@ -74,21 +82,6 @@ class Settings(BaseSettings):
     
     # File Storage Mode
     FILE_STORAGE_MODE: str = "local"
-    
-    # Invitation Code for registration
-    INVITE_CODE: str = "LAMBDA-0FD17920"
-    
-    # Email verification (Resend)
-    RESEND_API_KEY: str = ""
-    EMAIL_FROM: str = "onboarding@resend.dev"
-    EMAIL_VERIFICATION_EXPIRE_MINUTES: int = 10
-    EMAIL_VERIFICATION_RESEND_SECONDS: int = 60
-    EMAIL_VERIFICATION_HOURLY_LIMIT: int = 5
-
-    # Bot protection (Cloudflare Turnstile)
-    TURNSTILE_ENABLED: bool = False
-    TURNSTILE_SECRET_KEY: str = ""
-    TURNSTILE_SITE_KEY: str = ""
     
     class Config:
         env_file = ".env"
