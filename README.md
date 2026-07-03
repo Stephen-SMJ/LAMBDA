@@ -1,38 +1,38 @@
-# LAMBDA Local
+<div align="center">
 
-Local-first data analysis agent with the same LAMBDA chat UI, local file storage,
-SQLite persistence, and local code execution.
+# LAMBDA
 
-This repository is the open-source/local edition. It does not require
-PostgreSQL, Aliyun OSS, OpenSandbox, Docker, invite codes, email verification,
-Cloudflare Turnstile, or an admin backend.
+### LArge Model-based Data Analysis System
 
-## Versions
+[![Online App](https://img.shields.io/badge/Online%20App-Live%20Demo-ff6b6b?style=flat&logo=rocket&logoColor=white)](https://lambda.com.ai)
+[![Docs](https://img.shields.io/badge/Docs-Online-blue)](https://lambda.org.ai)
+[![Project](https://img.shields.io/badge/Project-Webpage-brightgreen)](https://www.polyu.edu.hk/ama/cmfai/lambda.html)
+[![Paper](https://img.shields.io/badge/Paper-JASA-red)](https://www.tandfonline.com/doi/full/10.1080/01621459.2025.2510000)
 
-The latest version is on `main` and tagged as `lambda-v2`.
+</div>
 
-The previous open-source version is preserved at branch `legacy-open-source`
-and tag `lambda-v1`.
+LAMBDA is a data analysis agent that turns natural-language questions into
+reproducible analysis workflows. Upload a dataset, ask a question, and LAMBDA
+can inspect the data, write and run code, create visualizations, summarize
+findings, and generate reports or notebooks from the session.
+
+The public web app is available at **https://lambda.com.ai**. This repository
+contains the runnable LAMBDA codebase, including the React frontend, FastAPI
+backend, model interface, file workspace, and analysis tools.
 
 ## Features
 
-- Chat-based data analysis with tool execution.
-- Local-only single-user mode. No login, registration, invite code, admin panel,
-  public case study publishing, or cloud account is required.
-- Local Python and shell tools.
-- Persistent Python variables within the same conversation.
-- Local workspaces under `backend/data/workspaces/<conversation_id>`.
-- Local SQLite database at `backend/data/lambda_local.db`.
-- File upload, generated file gallery, PDF/report artifacts, and chat history.
-- English/Chinese UI and prompt preference support.
-- Compatible with OpenAI-compatible model APIs.
-
-## Security Model
-
-This local edition executes code on the host machine. It is intended for trusted
-single-user desktop/local deployments. Do not expose the backend directly to
-untrusted users unless you add isolation back with Docker, OpenSandbox, or a
-similar sandbox.
+- Conversational data analysis with executable Python and shell tools.
+- Autonomous dataset exploration for CSV, Excel, text, and other common files.
+- Persistent workspace per conversation, so variables and generated files stay
+  available throughout the analysis.
+- Automatic chart, table, report, notebook, and artifact tracking in the Files
+  panel.
+- Export to Jupyter Notebook, Markdown/report bundles, PDF reports, and slides.
+- English and Chinese UI support, including Chinese report generation when
+  XeLaTeX and CJK fonts are installed.
+- Configurable OpenAI-style model endpoint and model list.
+- Local SQLite storage for conversations, uploads, and generated artifacts.
 
 ## Quick Start
 
@@ -43,32 +43,88 @@ Requirements:
 - npm
 - Optional for PDF/Chinese reports: TeX Live with XeLaTeX
 
-Start both backend and frontend. Python packages from `backend/requirements.txt`
-are installed automatically into the local virtual environment:
+Create your backend configuration and start both services:
 
 ```bash
 cp backend/.env.example backend/.env
-# Edit backend/.env and set OPENAI_API_KEY / OPENAI_BASE_URL / MODEL_LIST.
+# Edit backend/.env and set OPENAI_API_KEY, OPENAI_BASE_URL, and MODEL_LIST.
 ./start.sh
 ```
 
-Open:
+Open the app:
 
 ```text
 http://localhost:3000
 ```
 
-If those ports are already used, choose different local ports:
+Stop the app:
+
+```bash
+./stop.sh
+```
+
+If the default ports are already in use:
 
 ```bash
 BACKEND_PORT=8010 FRONTEND_PORT=3010 ./start.sh
 ```
 
-Stop:
+## Model Configuration
 
-```bash
-./stop.sh
+LAMBDA talks to models through an OpenAI-style chat completions interface. Set
+the endpoint and the models you want to expose in `backend/.env`:
+
+```env
+OPENAI_API_KEY=your-api-key
+OPENAI_BASE_URL=https://api.openai.com/v1
+MODEL_LIST='["mimo-v2.5-pro","deepseek-v4-pro"]'
 ```
+
+`OPENAI_BASE_URL` should be the base URL of an OpenAI-compatible API. LAMBDA
+will call:
+
+```text
+{OPENAI_BASE_URL}/chat/completions
+```
+
+`MODEL_LIST` is a JSON array of model IDs. These IDs appear in the model picker
+and are sent to the provider unchanged. The first model in the list is used as
+the default model unless `DEFAULT_MODEL` is also set.
+
+## How To Use
+
+1. Open `http://localhost:3000`.
+2. Choose a model from the picker.
+3. Upload one or more data files, or start with an example dataset.
+4. Ask a question, such as:
+
+```text
+Analyze this dataset, identify the main patterns, create visualizations, and
+write a report with the most important findings.
+```
+
+For a hands-off workflow, use Autonomous Exploration. LAMBDA will inspect the
+dataset, plan the analysis, run code, build charts, and produce a report.
+
+## Exports And Files
+
+Each conversation has its own workspace under:
+
+```text
+backend/data/workspaces/<conversation_id>/
+```
+
+Uploaded files, charts, reports, notebooks, and other generated artifacts are
+shown in the Files panel. Runtime data is stored under `backend/data/`, including:
+
+```text
+backend/data/
+  lambda_local.db
+  uploads/
+  workspaces/
+```
+
+These files are intentionally ignored by git.
 
 ## Manual Setup
 
@@ -91,72 +147,36 @@ npm install
 npm run dev
 ```
 
-## Optional LaTeX Support
+## PDF And Chinese Report Support
 
-Install these system dependencies once if you want LAMBDA Local to compile
-LaTeX/PDF reports, including Chinese reports:
+For LaTeX/PDF reports, especially Chinese reports, install the optional system
+dependencies once:
 
 ```bash
 ./scripts/install-system-deps.sh
 ```
 
-This installs `pdflatex`, `xelatex`, Chinese LaTeX packages (`xeCJK`/`ctex`),
-and Noto CJK fonts for Chinese charts.
-
-If you want `./start.sh` to install these system packages automatically when
-`xelatex` is missing, run:
+This installs `pdflatex`, `xelatex`, Chinese LaTeX packages, and Noto CJK fonts
+for Chinese charts and reports. You can also let `start.sh` install them when
+missing:
 
 ```bash
 LAMBDA_AUTO_INSTALL_SYSTEM_DEPS=1 ./start.sh
 ```
 
-This uses `sudo apt-get`, so it is opt-in rather than silently modifying the OS.
+This uses `sudo apt-get`, so it is opt-in.
 
-## Configuration
+## Runtime Note
 
-Core local settings in `backend/.env`:
+LAMBDA executes analysis code on the machine where the backend is running. Use
+it with trusted users and trusted data, and do not expose the backend directly
+to untrusted traffic without adding sandboxing or other isolation.
 
-```env
-LOCAL_MODE=true
-DATABASE_URL=sqlite:///./data/lambda_local.db
-FILE_STORAGE_MODE=local
-CODE_EXECUTION_MODE=local
-LOCAL_WORKSPACE_ROOT=./data/workspaces
+## Versions
 
-OPENAI_API_KEY=your-api-key
-OPENAI_BASE_URL=https://api.openai.com/v1
-MODEL_LIST='["mimo-v2.5-pro","deepseek-v4-pro"]'
-```
+The latest code is on `main` and tagged as `lambda-v2`.
 
-`OPENAI_BASE_URL` must point to an OpenAI-style chat completions interface,
-meaning the backend calls `{OPENAI_BASE_URL}/chat/completions` with the
-configured API key. `MODEL_LIST` is a JSON array of model IDs available from
-that endpoint; these IDs are shown in the UI and sent to the provider unchanged.
-The first item in `MODEL_LIST` is used as the default model unless
-`DEFAULT_MODEL` is explicitly set.
+The previous open-source version is preserved at:
 
-## Data Layout
-
-Runtime files are intentionally ignored by git:
-
-```text
-backend/data/
-  lambda_local.db
-  uploads/
-  workspaces/
-```
-
-Generated charts, reports, notebooks, and other artifacts are stored inside the
-conversation workspace and shown through the Files panel.
-
-## Desktop App Direction
-
-The recommended desktop path is Tauri:
-
-- Keep this FastAPI backend as a local sidecar process.
-- Package the React frontend with Tauri.
-- Start/stop the backend from the desktop shell.
-- Store user data under the OS app data directory instead of the repo directory.
-
-Electron is also possible, but Tauri is usually smaller and better suited for a
-local utility app.
+- Branch: `legacy-open-source`
+- Tag: `lambda-v1`
