@@ -23,6 +23,7 @@ backend, model interface, file workspace, and analysis tools.
 ## Features
 
 - Conversational data analysis with executable Python and shell tools.
+- Beautiful and intuitive UI for data analysis.
 - Autonomous dataset exploration for CSV, Excel, text, and other common files.
 - Persistent workspace per conversation, so variables and generated files stay
   available throughout the analysis.
@@ -180,3 +181,48 @@ The previous open-source version is preserved at:
 
 - Branch: `legacy-open-source`
 - Tag: `lambda-v1`
+
+## Acknowledgements
+
+Thank the contributors and the communities for their support and feedback.
+
+---
+
+> If you find our work useful in your research, consider citing our paper by:
+
+```bibtex
+@article{sun2026lambda,
+  title={Lambda: A large model based data agent},
+  author={Sun, Maojun and Han, Ruijian and Jiang, Binyan and Qi, Houduo and Sun, Defeng and Yuan, Yancheng and Huang, Jian},
+  journal={Journal of the American Statistical Association},
+  volume={121},
+  number={553},
+  pages={1--13},
+  year={2026},
+  publisher={Taylor \& Francis}
+}
+
+@article{sun2025survey,
+  title={A survey on large language model-based agents for statistics and data science},
+  author={Sun, Maojun and Han, Ruijian and Jiang, Binyan and Qi, Houduo and Sun, Defeng and Yuan, Yancheng and Huang, Jian},
+  journal={The American Statistician},
+  pages={1--14},
+  year={2025},
+  publisher={Taylor \& Francis}
+}
+
+@article{sun2026rejoinder,
+  title={Rejoinder to the Discussions on {LAMBDA}: A Large Model Based Data Agent},
+  author={Sun, Maojun and Han, Ruijian and Jiang, Binyan and Qi, Houduo and Sun, Defeng and Yuan, Yancheng and Huang, Jian},
+  journal={Journal of the American Statistical Association},
+  volume={121},
+  number={553},
+  pages={36--43},
+  year={2026},
+  publisher={Taylor \& Francis}
+}
+```
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=AMA-CMFAI/LAMBDA&type=Date)](https://www.star-history.com/#AMA-CMFAI/LAMBDA&Date)
