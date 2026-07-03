@@ -10,6 +10,7 @@ from pathlib import Path
 import re
 
 from app.api.deps import get_current_active_user
+from app.core.config import settings
 from app.core.database import get_db
 from app.core.hashid import decode_id
 from app.models.models import Conversation, Message, User, UploadedFile
@@ -276,7 +277,7 @@ async def export_report(
             report_content = await llm_service.chat([
                 {"role": "system", "content": "You are a professional data scientist writing comprehensive analysis reports."},
                 {"role": "user", "content": prompt}
-            ], model=conversation.model or "deepseek-v4-flash")
+            ], model=conversation.model or settings.DEFAULT_MODEL)
             
         except Exception as e:
             # Fallback to basic report

@@ -47,7 +47,7 @@ class MessageResponse(MessageBase):
 # Conversation schemas
 class ConversationBase(BaseModel):
     title: Optional[str] = None
-    model: str = "deepseek-v4-flash"
+    model: Optional[str] = None
 
 
 class ConversationCreate(ConversationBase):

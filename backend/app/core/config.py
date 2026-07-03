@@ -1,6 +1,6 @@
-from pydantic import AliasChoices, Field
+from pydantic import AliasChoices, Field, model_validator
 from pydantic_settings import BaseSettings
-from typing import Optional, List
+from typing import List
 
 
 class Settings(BaseSettings):
@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     LOCAL_USER_EMAIL: str = "local@lambda.local"
     LOCAL_USER_NAME: str = "Local User"
     
-    # Security
+    # Legacy auth utility defaults. Local mode does not require these in .env.
     SECRET_KEY: str = "your-super-secret-key-change-in-production"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 10080  # 7 days
@@ -18,31 +18,38 @@ class Settings(BaseSettings):
     # LLM Configuration
     OPENAI_API_KEY: str = ""
     OPENAI_BASE_URL: str = "https://api.openai.com/v1"
-    DEEPSEEK_API_KEY: str = ""
-    DEEPSEEK_BASE_URL: str = "https://api.deepseek.com"
-    XIAOMI_API_KEY: str = ""
-    XIAOMI_BASE_URL: str = "https://token-plan-sgp.xiaomimimo.com/v1"
     DEFAULT_MODEL: str = Field(
-        default="deepseek-v4-flash",
+        default="",
         validation_alias=AliasChoices("DEFAULT_MODEL", "MODEL"),
     )
-    
-    # Available Models
-    AVAILABLE_MODELS: List[str] = [
-        "deepseek-v4-pro",
-        "deepseek-v4-flash",
-        "claude-sonnet-4-6",
-        "openai/gpt-5.3-codex",
-        "mimo-v2.5-pro",
-        "mimo-v2.5",
-    ]
+
+    # Models exposed in the UI. The first model is used as the default when
+    # DEFAULT_MODEL is not set, and the IDs are sent unchanged to OPENAI_BASE_URL.
+    MODEL_LIST: List[str] = Field(
+        default=[
+            "mimo-v2.5-pro",
+            "deepseek-v4-pro",
+        ],
+        validation_alias=AliasChoices("MODEL_LIST", "AVAILABLE_MODELS"),
+    )
     MULTIMODAL_MODELS: List[str] = [
-        "claude-sonnet-4-6",
-        "openai/gpt-5.3-codex",
+        "mimo-v2.5-pro",
         "mimo-v2.5",
     ]
     MULTIMODAL_IMAGE_DETAIL: str = "high"
     MULTIMODAL_IMAGE_MAX_BYTES: int = 8 * 1024 * 1024
+
+    @model_validator(mode="after")
+    def set_default_model_from_list(self):
+        if not self.MODEL_LIST:
+            raise ValueError("MODEL_LIST must contain at least one model")
+        if not self.DEFAULT_MODEL:
+            self.DEFAULT_MODEL = self.MODEL_LIST[0]
+        return self
+
+    @property
+    def AVAILABLE_MODELS(self) -> List[str]:
+        return self.MODEL_LIST
     
     # Code Execution
     CODE_EXECUTION_TIMEOUT: int = 900

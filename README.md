@@ -7,6 +7,13 @@ This repository is the open-source/local edition. It does not require
 PostgreSQL, Aliyun OSS, OpenSandbox, Docker, invite codes, email verification,
 Cloudflare Turnstile, or an admin backend.
 
+## Versions
+
+The latest version is on `main` and tagged as `lambda-v2`.
+
+The previous open-source version is preserved at branch `legacy-open-source`
+and tag `lambda-v1`.
+
 ## Features
 
 - Chat-based data analysis with tool execution.
@@ -41,7 +48,7 @@ are installed automatically into the local virtual environment:
 
 ```bash
 cp backend/.env.example backend/.env
-# Edit backend/.env and set OPENAI_API_KEY / OPENAI_BASE_URL / DEFAULT_MODEL.
+# Edit backend/.env and set OPENAI_API_KEY / OPENAI_BASE_URL / MODEL_LIST.
 ./start.sh
 ```
 
@@ -118,17 +125,15 @@ LOCAL_WORKSPACE_ROOT=./data/workspaces
 
 OPENAI_API_KEY=your-api-key
 OPENAI_BASE_URL=https://api.openai.com/v1
-DEFAULT_MODEL=gpt-4o-mini
+MODEL_LIST='["mimo-v2.5-pro","deepseek-v4-pro"]'
 ```
 
-Optional model providers:
-
-```env
-DEEPSEEK_API_KEY=
-DEEPSEEK_BASE_URL=https://api.deepseek.com
-XIAOMI_API_KEY=
-XIAOMI_BASE_URL=https://token-plan-sgp.xiaomimimo.com/v1
-```
+`OPENAI_BASE_URL` must point to an OpenAI-style chat completions interface,
+meaning the backend calls `{OPENAI_BASE_URL}/chat/completions` with the
+configured API key. `MODEL_LIST` is a JSON array of model IDs available from
+that endpoint; these IDs are shown in the UI and sent to the provider unchanged.
+The first item in `MODEL_LIST` is used as the default model unless
+`DEFAULT_MODEL` is explicitly set.
 
 ## Data Layout
 

@@ -10,14 +10,6 @@ class LLMService:
             api_key=settings.OPENAI_API_KEY,
             base_url=settings.OPENAI_BASE_URL
         )
-        self.deepseek_client = openai.AsyncOpenAI(
-            api_key=settings.DEEPSEEK_API_KEY or settings.OPENAI_API_KEY,
-            base_url=settings.DEEPSEEK_BASE_URL
-        )
-        self.xiaomi_client = openai.AsyncOpenAI(
-            api_key=settings.XIAOMI_API_KEY or settings.OPENAI_API_KEY,
-            base_url=settings.XIAOMI_BASE_URL
-        )
         self.default_model = settings.DEFAULT_MODEL
 
     def _normalize_model(self, model: str) -> str:
@@ -27,10 +19,6 @@ class LLMService:
 
     def _client_for_model(self, model: str):
         normalized_model = self._normalize_model(model)
-        if normalized_model.startswith("deepseek-"):
-            return self.deepseek_client, normalized_model
-        if normalized_model.startswith("mimo-"):
-            return self.xiaomi_client, normalized_model
         return self.client, normalized_model
 
     def _get_delta_extra_text(self, delta: Any, *field_names: str) -> str:

@@ -5,6 +5,7 @@ from typing import List
 from app.api.deps import get_current_active_user
 from app.core.database import get_db
 from app.core.hashid import encode_id, decode_id
+from app.core.config import settings
 from app.models.models import Conversation, Message, UsageRecord, User
 from app.models.schemas import (
     ConversationCreate, 
@@ -43,7 +44,7 @@ def list_conversations(
             "hash_id": encode_id(conv.id),
             "user_id": conv.user_id,
             "title": conv.title,
-            "model": conv.model,
+            "model": conv.model or settings.DEFAULT_MODEL,
             "created_at": conv.created_at,
             "updated_at": conv.updated_at,
             "message_count": msg_count
@@ -62,7 +63,7 @@ def create_conversation(
     conversation = Conversation(
         user_id=current_user.id,
         title=conv_data.title or "New Conversation",
-        model=conv_data.model
+        model=conv_data.model or settings.DEFAULT_MODEL
     )
     db.add(conversation)
     db.commit()
@@ -73,7 +74,7 @@ def create_conversation(
         "hash_id": encode_id(conversation.id),
         "user_id": conversation.user_id,
         "title": conversation.title,
-        "model": conversation.model,
+        "model": conversation.model or settings.DEFAULT_MODEL,
         "created_at": conversation.created_at,
         "updated_at": conversation.updated_at,
         "message_count": 0
@@ -112,7 +113,7 @@ def get_conversation(
         "hash_id": encode_id(conversation.id),
         "user_id": conversation.user_id,
         "title": conversation.title,
-        "model": conversation.model,
+        "model": conversation.model or settings.DEFAULT_MODEL,
         "created_at": conversation.created_at,
         "updated_at": conversation.updated_at,
         "message_count": len(conversation.messages),
@@ -171,7 +172,7 @@ def update_conversation(
         "hash_id": encode_id(conversation.id),
         "user_id": conversation.user_id,
         "title": conversation.title,
-        "model": conversation.model,
+        "model": conversation.model or settings.DEFAULT_MODEL,
         "created_at": conversation.created_at,
         "updated_at": conversation.updated_at,
         "message_count": message_count

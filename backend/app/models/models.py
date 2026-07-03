@@ -31,7 +31,7 @@ class Conversation(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     title = Column(String(500), nullable=True)
-    model = Column(String(100), default="deepseek-v4-flash")
+    model = Column(String(100), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
@@ -87,4 +87,3 @@ class UploadedFile(Base):
     file_size = Column(Integer, nullable=False)
     mime_type = Column(String(100), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
-

@@ -274,7 +274,7 @@ async def stream_chat_response(
             conversation = Conversation(
                 user_id=user.id,
                 title=initial_title[:50] + "..." if len(initial_title) > 50 else initial_title,
-                model=request.model or "deepseek-v4-flash"
+                model=request.model or settings.DEFAULT_MODEL
             )
             db.add(conversation)
             db.commit()
@@ -657,7 +657,7 @@ When you receive an error from tool execution:
 - The system will automatically display all generated files and images"""
 
         # Build conversation history
-        model = request.model or conversation.model or "deepseek-v4-flash"
+        model = request.model or conversation.model or settings.DEFAULT_MODEL
         inline_tool_history = should_inline_tool_results(model)
         omit_persisted_tool_calls = inline_tool_history or is_deepseek_model(model)
         messages = db.query(Message).filter(
