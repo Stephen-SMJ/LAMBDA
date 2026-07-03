@@ -5,9 +5,17 @@
 ### LArge Model-based Data Analysis System
 
 [![Online App](https://img.shields.io/badge/Online%20App-Live%20Demo-ff6b6b?style=flat&logo=rocket&logoColor=white)](https://lambda.com.ai)
-[![Docs](https://img.shields.io/badge/Docs-Online-blue)](https://lambda.org.ai)
+[![Blog](https://img.shields.io/badge/Blog-Site-blue?style=flat&logo=readme&logoColor=white)](https://lambda.org.ai)
+[![Cases](https://img.shields.io/badge/Cases-Gallery-9cf?style=flat&logo=databricks&logoColor=white)](https://lambda.com.ai/cases)
 [![Project](https://img.shields.io/badge/Project-Webpage-brightgreen)](https://www.polyu.edu.hk/ama/cmfai/lambda.html)
 [![Paper](https://img.shields.io/badge/Paper-JASA-red)](https://www.tandfonline.com/doi/full/10.1080/01621459.2025.2510000)
+
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-Frontend-61DAFB?style=flat&logo=react&logoColor=111111)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-UI-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![SQLite](https://img.shields.io/badge/SQLite-Storage-003B57?style=flat&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![OpenAI Compatible](https://img.shields.io/badge/OpenAI--compatible-Models-412991?style=flat&logo=openai&logoColor=white)](https://platform.openai.com/docs/api-reference/chat)
 
 </div>
 
