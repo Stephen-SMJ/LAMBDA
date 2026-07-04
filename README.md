@@ -1,9 +1,7 @@
 <div align="center">
 
 # LAMBDA
-
-### LArge Model-based Data Analysis System
-
+### LArge Model-based Data Analysis Agent System
 [![Online App](https://img.shields.io/badge/Online%20App-Live%20Demo-ff6b6b?style=flat&logo=rocket&logoColor=white)](https://lambda.com.ai)
 [![Blog](https://img.shields.io/badge/Blog-Site-blue?style=flat&logo=readme&logoColor=white)](https://lambda.org.ai)
 [![Cases](https://img.shields.io/badge/Cases-Gallery-9cf?style=flat&logo=databricks&logoColor=white)](https://lambda.com.ai/cases)
@@ -17,6 +15,7 @@
 [![SQLite](https://img.shields.io/badge/SQLite-Storage-003B57?style=flat&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![OpenAI Compatible](https://img.shields.io/badge/OpenAI--compatible-Models-412991?style=flat&logo=openai&logoColor=white)](https://platform.openai.com/docs/api-reference/chat)
 
+<img width="1280" height="804" alt="lambda_gif-ezgif com-optimize" src="https://github.com/user-attachments/assets/a98a3258-8aef-4790-b25d-4521e9be966f" />
 </div>
 
 LAMBDA is a data analysis agent that turns natural-language questions into
