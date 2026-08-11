@@ -209,17 +209,19 @@ Thank the contributors and the communities for their support and feedback.
   publisher={Taylor \& Francis}
 }
 
-@article{sun2025survey,
+@article{sun2026survey,
   title={A survey on large language model-based agents for statistics and data science},
   author={Sun, Maojun and Han, Ruijian and Jiang, Binyan and Qi, Houduo and Sun, Defeng and Yuan, Yancheng and Huang, Jian},
   journal={The American Statistician},
-  pages={1--14},
-  year={2025},
+  volume={80},
+  number={3},
+  pages={331--344},
+  year={2026},
   publisher={Taylor \& Francis}
 }
 
 @article{sun2026rejoinder,
-  title={Rejoinder to the Discussions on {LAMBDA}: A Large Model Based Data Agent},
+  title={Rejoinder to the Discussions on “LAMBDA: A Large Model Based Data Agent”},
   author={Sun, Maojun and Han, Ruijian and Jiang, Binyan and Qi, Houduo and Sun, Defeng and Yuan, Yancheng and Huang, Jian},
   journal={Journal of the American Statistical Association},
   volume={121},
@@ -228,8 +230,25 @@ Thank the contributors and the communities for their support and feedback.
   year={2026},
   publisher={Taylor \& Francis}
 }
+
+@article{sun2026rejoinder2,
+  title={Rejoinder to the Discussions on “A Survey on Large Language Model-based Agents for Statistics and Data Science” A Statistical View of LLM-Based Data Science Agents: Reasoning, Uncertainty, and Reliability},
+  author={Sun, Maojun and Han, Ruijian and Jiang, Binyan and Qi, Houduo and Sun, Defeng and Yuan, Yancheng and Huang, Jian},
+  journal={The American Statistician},
+  volume={80},
+  number={3},
+  pages={352--359},
+  year={2026},
+  publisher={Taylor \& Francis}
+}
 ```
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=AMA-CMFAI/LAMBDA&type=Date)](https://www.star-history.com/#AMA-CMFAI/LAMBDA&Date)
+<a href="https://www.star-history.com/?repos=AMA-CMFAI%2FLAMBDA&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=AMA-CMFAI/LAMBDA&type=date&theme=dark&legend=top-left&sealed_token=Clwj2V9cbu-l2lmL2RszsRQsq2ztvhJXO3xxHg-R3jkfmKzOingB5hqsW24cyMWnjuWYrncDjdMwhCJAJrUoZnIz3ymrtuDsa2XM2zzVCc0ihX0yl_TiuqVC0IJTR-R5Dg7U-vu-_QzTqWCgAaxJJ7wG5UnY1FlYYmAq95mbKZGMXRq_4XhjWNc8QTy9" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=AMA-CMFAI/LAMBDA&type=date&legend=top-left&sealed_token=Clwj2V9cbu-l2lmL2RszsRQsq2ztvhJXO3xxHg-R3jkfmKzOingB5hqsW24cyMWnjuWYrncDjdMwhCJAJrUoZnIz3ymrtuDsa2XM2zzVCc0ihX0yl_TiuqVC0IJTR-R5Dg7U-vu-_QzTqWCgAaxJJ7wG5UnY1FlYYmAq95mbKZGMXRq_4XhjWNc8QTy9" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=AMA-CMFAI/LAMBDA&type=date&legend=top-left&sealed_token=Clwj2V9cbu-l2lmL2RszsRQsq2ztvhJXO3xxHg-R3jkfmKzOingB5hqsW24cyMWnjuWYrncDjdMwhCJAJrUoZnIz3ymrtuDsa2XM2zzVCc0ihX0yl_TiuqVC0IJTR-R5Dg7U-vu-_QzTqWCgAaxJJ7wG5UnY1FlYYmAq95mbKZGMXRq_4XhjWNc8QTy9" />
+ </picture>
+</a>
